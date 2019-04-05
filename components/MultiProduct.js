@@ -88,9 +88,9 @@ class MultiProduct extends React.Component{
           isUserAgentMobile={this.props.isUserAgentMobile}
         /> :
         <div className="row">
-          <div className="col-12">
-            <h1>Esta combinación no está disponible actualmente, puedes usar los botones superiores para cotizar
-              otras</h1>
+          <div className="col-12 mt-3">
+            <h4>Esta combinación no está disponible actualmente, puedes usar los botones superiores para cotizar
+              otras</h4>
           </div>
         </div>}
     </div>

@@ -104,8 +104,8 @@ class Index extends React.Component{
       </div>
     }
 
-    let apiResourceObjects = this.props.apiResourceObjects;
-    let pricingEntries = this.props.pricingEntries;
+    const apiResourceObjects = this.props.apiResourceObjects;
+    const pricingEntries = this.props.pricingEntries;
 
     return <AppContext.Provider value={{namespace: this.props.namespace}}>
       <div className="container-fluid">
@@ -119,7 +119,7 @@ class Index extends React.Component{
           <ProductLinks
             apiResourceObjects={apiResourceObjects}
             wtbEntity={wtbEntity}
-            pricingEntry={pricingEntries[0]}
+            entities={pricingEntries[0].entities}
           />
         }
       </div>
@@ -151,7 +151,8 @@ const getPricingEntries = async wtbEntity => {
   const categoryId = wtbEntity.category.split('/').filter(x => Boolean(x.length)).reverse()[0];
   let products;
 
-  if (categoryId in settings.bucketCategories) {
+  // Get the bucket only if the product is an S10e (G970) / S10 (G973) / S10+ (G975)
+  if (categoryId in settings.bucketCategories && wtbEntity.key.includes('G97')) {
     products = await fetchJson(`products/${productId}/bucket/?fields=${settings.bucketCategories[categoryId].bucketField}`);
   } else {
     products = [wtbEntity.product]

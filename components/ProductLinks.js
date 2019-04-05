@@ -31,7 +31,7 @@ class ProductLinks extends React.Component {
       </React.Fragment>
     } else {
       return <React.Fragment>
-        {this.props.pricingEntry.entities.map(entity =>
+        {this.props.entities.map(entity =>
           <GenericLink
             key={entity.id}
             entity={entity}
