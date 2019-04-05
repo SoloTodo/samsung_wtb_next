@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "name": "samsung_wtb",
+  "alias": [
+    "samsung.solotodo.com"
+  ],
+  "builds": [{ "src": "package.json", "use": "@now/next" }],
+  "routes": [
+    {
+      "src": "/$",
+      "dest": "/"
+    }
+  ]
+}

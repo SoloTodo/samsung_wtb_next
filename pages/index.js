@@ -1,0 +1,175 @@
+import React from 'react'
+import uuidv4 from "uuid/v4"
+
+import {fetchJson} from '../react-utils/utils'
+import AppContext from '../react-utils/components/Context'
+
+import settings from '../settings'
+import ProductLinks from '../components/ProductLinks'
+import MultiProduct from '../components/MultiProduct'
+
+
+class Index extends React.Component{
+  static getInitialProps = async ({req, query}) => {
+    const promises = [];
+
+    promises.push(getApiResourceObjects());
+    promises.push(getWtbEntity(query.model_code));
+
+    const [apiResourceObjects, wtbEntity] = await Promise.all(promises);
+
+    if (!wtbEntity || !wtbEntity.product) {
+      return {
+        apiResourceObjects,
+        wtbEntity
+      }
+    }
+
+    // Pricing Entries
+    const pricingEntries = await getPricingEntries(wtbEntity);
+    for (const pricingEntry of pricingEntries) {
+      pricingEntry.entities.sort((a, b) => {
+        const aStore = apiResourceObjects[a.store];
+        const bStore = apiResourceObjects[b.store];
+
+        const aPriority = settings.storePriorities[aStore.id] || 5;
+        const bPriority = settings.storePriorities[bStore.id] || 5;
+
+        if (aPriority === bPriority) {
+          return aStore.name.toUpperCase().localeCompare(bStore.name.toUpperCase());
+        } else {
+          return aPriority - bPriority
+        }
+      })
+    }
+
+    const namespace = uuidv4();
+
+    return {
+      apiResourceObjects,
+      wtbEntity,
+      pricingEntries,
+      namespace
+    }
+  };
+
+  componentDidMount() {
+    if (!this.props.wtbEntity) {
+      return
+    }
+
+    const params = {};
+    const productKey = this.props.wtbEntity.key;
+    const productName = this.props.wtbEntity.product.name;
+    const categoryName = this.props.apiResourceObjects[this.props.wtbEntity.category].name;
+    const pricingEntry = this.props.pricingEntries.filter(entry => entry.product.id === this.props.wtbEntity.product.id)[0]
+    const status = pricingEntry.entities.length ? "Disponible" : "No Disponible";
+
+    params.dimension1 = productName;
+    params.dimension2 = categoryName;
+    params.dimension4 = `${productKey}|${productName}|${categoryName}|${status}`;
+    params.dimension6 = productKey;
+    params.dimension7 = status;
+
+    window.gtag('config', settings.googleAnalyticsId, params);
+
+    delete params['dimension7'];
+    params.non_interaction = true;
+    params.event_category = 'Store Display';
+    params.event_label = 'Store Display';
+    params.send_to = settings.googleAnalyticsId;
+    const sent_stores = [];
+
+    for (const entity of pricingEntry.entities) {
+      const store = this.props.apiResourceObjects[entity.store];
+      if (sent_stores.includes(store.id)) {
+        continue;
+      }
+
+      params.dimension3 = store.name;
+      params.dimension4 = `${productKey}|${productName}|${categoryName}|${store.name}`;
+      sent_stores.push(store.id);
+      window.gtag('event', 'Display', params)
+    }
+  }
+
+  render() {
+    const wtbEntity = this.props.wtbEntity;
+
+    if (!wtbEntity || !wtbEntity.product) {
+      return <div className="row">
+        <div className="col-12">
+          <h3>El producto aún no está disponible</h3>
+        </div>
+      </div>
+    }
+
+    let apiResourceObjects = this.props.apiResourceObjects;
+    let pricingEntries = this.props.pricingEntries;
+
+    return <AppContext.Provider value={{namespace: this.props.namespace}}>
+      <div className="container-fluid">
+        {pricingEntries.length > 1 ?
+          <MultiProduct
+            apiResourceObjects={apiResourceObjects}
+            wtbEntity={wtbEntity}
+            pricingEntries={pricingEntries}
+          />
+          :
+          <ProductLinks
+            apiResourceObjects={apiResourceObjects}
+            wtbEntity={wtbEntity}
+            pricingEntry={pricingEntries[0]}
+          />
+        }
+      </div>
+    </AppContext.Provider>
+  }
+}
+
+const getApiResourceObjects = () => {
+  return fetchJson('resources/?names=stores&names=categories&names=countries&names=store_types').then(resources => {
+    const apiResourceObjects = {};
+
+    for (const resource of resources) {
+      apiResourceObjects[resource.url] = resource;
+    }
+
+    return apiResourceObjects;
+  });
+};
+
+const getWtbEntity = key => {
+  const wtbUrl = `wtb/entities/?keys=${key}&brands=${settings.wtbBrand}`;
+  return fetchJson(wtbUrl).then(wtbEntity => {
+    return wtbEntity.results[0] || null;
+  });
+};
+
+const getPricingEntries = async wtbEntity => {
+  const productId = wtbEntity.product.id;
+  const categoryId = wtbEntity.category.split('/').filter(x => Boolean(x.length)).reverse()[0];
+  let products;
+
+  if (categoryId in settings.bucketCategories) {
+    products = await fetchJson(`products/${productId}/bucket/?fields=${settings.bucketCategories[categoryId].bucketField}`);
+  } else {
+    products = [wtbEntity.product]
+  }
+
+  let url = 'products/available_entities/?';
+  for (const product of products) {
+    url += `ids=${product.id}&`
+  }
+  for (const storeId of settings.stores) {
+    url += `stores=${storeId}&`
+  }
+
+  const entityResults = await fetchJson(url);
+
+  return entityResults.results.filter(pricingEntry =>
+    pricingEntry.product.id === productId || pricingEntry.entities.length
+  )
+};
+
+export default Index

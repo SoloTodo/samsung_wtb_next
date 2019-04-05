@@ -1,0 +1,52 @@
+$theme-colors: (
+  "primary": #1428A0,
+);
+
+@import "~bootstrap/scss/bootstrap";
+
+body {
+    font-family: "Samsung One", 'sans-serif' !important;
+}
+
+/* Cell Link */
+
+.cell_link {
+    padding: 10px 0;
+    min-height: 80px;
+}
+
+.cell_link .store_logo {
+    width: 120px;
+    height: 80px;
+}
+
+.cell_link .store_links {
+    flex-grow: 1;
+    padding: 0 10px;
+}
+
+.cell_link .store_links .link {
+    padding: 4px 0;
+}
+
+.cell_link .store_logo .logo {
+    max-height: 80px;
+    max-width: 110px;
+}
+
+/* Product link */
+
+.product_link {
+    padding: 10px 0;
+}
+
+.product_link .store_logo {
+    width: 150px;
+    height: 80px;
+
+}
+
+.product_link .store_logo .logo {
+    max-height: 80px;
+    max-width: 140px;
+}
