@@ -2,8 +2,7 @@
   "name": "create-next-example-app",
   "scripts": {
     "dev": "next",
-    "build": "next build",
-    "start": "next start"
+    "deploy": "now --target production"
   },
   "dependencies": {
     "@zeit/next-css": "^1.0.1",
