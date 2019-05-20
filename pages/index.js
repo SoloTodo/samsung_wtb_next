@@ -54,7 +54,7 @@ class Index extends React.Component{
   };
 
   componentDidMount() {
-    if (!this.props.wtbEntity) {
+    if (!this.props.wtbEntity || !this.props.wtbEntity.product) {
       return
     }
 
@@ -62,7 +62,7 @@ class Index extends React.Component{
     const productKey = this.props.wtbEntity.key;
     const productName = this.props.wtbEntity.product.name;
     const categoryName = this.props.apiResourceObjects[this.props.wtbEntity.category].name;
-    const pricingEntry = this.props.pricingEntries.filter(entry => entry.product.id === this.props.wtbEntity.product.id)[0]
+    const pricingEntry = this.props.pricingEntries.filter(entry => entry.product.id === this.props.wtbEntity.product.id)[0];
     const status = pricingEntry.entities.length ? "Disponible" : "No Disponible";
 
     params.dimension1 = productName;
