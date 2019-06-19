@@ -11,6 +11,7 @@ export default {
   },
   cellCategoryId: 6,
   mobileNetworkOperatorStoreType: 3,
+  samsungShopId: 223,
   bucketCategories: {
     '6': {
       'categoryName': 'Celulares',

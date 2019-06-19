@@ -27,6 +27,12 @@ export default class SamsungWtbLeadLink extends React.Component {
   };
 
   render() {
+    let targetUrl = null;
+
+    if (this.props.store.id === settings.samsungShopId) {
+      targetUrl = `${this.props.entity.external_url}?utm_source=samsung.com&utm_medium=referral&utm_campaign=wtb`
+    }
+
     return <LeadLink
       entity={this.props.entity}
       store={this.props.store}
@@ -34,6 +40,7 @@ export default class SamsungWtbLeadLink extends React.Component {
       websiteId={settings.websiteId}
       callback={this.onClick}
       className={this.props.className}
+      targetUrl={targetUrl}
     >
       {this.props.children}
     </LeadLink>
