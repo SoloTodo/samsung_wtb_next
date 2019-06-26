@@ -32,8 +32,8 @@ class Index extends React.Component{
         const aStore = apiResourceObjects[a.store];
         const bStore = apiResourceObjects[b.store];
 
-        const aPriority = settings.storePriorities[aStore.id] || 5;
-        const bPriority = settings.storePriorities[bStore.id] || 5;
+        const aPriority = settings.storePriorities[aStore.id] || 4;
+        const bPriority = settings.storePriorities[bStore.id] || 4;
 
         if (aPriority === bPriority) {
           return aStore.name.toUpperCase().localeCompare(bStore.name.toUpperCase());
