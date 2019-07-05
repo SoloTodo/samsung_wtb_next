@@ -2,13 +2,13 @@ export default {
   websiteId: 9,
   wtbBrand: 6,
   googleAnalyticsId: 'UA-11970222-16',
-  stores: [44, 99, 210, 30, 60, 88, 9, 87, 197, 5, 43, 11, 12, 18, 67, 170, 61, 38, 37, 176, 181, 167, 63, 85, 172, 223, 225],
+  stores: [44, 99, 227, 30, 60, 88, 9, 87, 197, 5, 43, 11, 12, 18, 67, 170, 61, 38, 37, 176, 181, 167, 63, 85, 172, 223, 225],
   storePriorities: {
     223: 1, // Samsung Shop
     225: 2, // MercadoLibre Samsung
     99: 3,  // Tienda Smart
     44: 3,  // Vivelo
-    210: 3  // Tómalo
+    227: 3  // Tekstore
   },
   cellCategoryId: 6,
   mobileNetworkOperatorStoreType: 3,
