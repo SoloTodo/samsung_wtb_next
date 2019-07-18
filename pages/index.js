@@ -1,8 +1,6 @@
 import React from 'react'
-import uuidv4 from "uuid/v4"
 
 import {fetchJson} from '../react-utils/utils'
-import AppContext from '../react-utils/components/Context'
 
 import settings from '../settings'
 import ProductLinks from '../components/ProductLinks'
@@ -10,7 +8,7 @@ import MultiProduct from '../components/MultiProduct'
 
 
 class Index extends React.Component{
-  static getInitialProps = async ({req, query}) => {
+  static getInitialProps = async ({query}) => {
     const promises = [];
 
     promises.push(getApiResourceObjects());
@@ -43,13 +41,10 @@ class Index extends React.Component{
       })
     }
 
-    const namespace = uuidv4();
-
     return {
       apiResourceObjects,
       wtbEntity,
-      pricingEntries,
-      namespace
+      pricingEntries
     }
   };
 
@@ -107,23 +102,21 @@ class Index extends React.Component{
     const apiResourceObjects = this.props.apiResourceObjects;
     const pricingEntries = this.props.pricingEntries;
 
-    return <AppContext.Provider value={{namespace: this.props.namespace}}>
-      <div className="container-fluid">
-        {pricingEntries.length > 1 ?
-          <MultiProduct
-            apiResourceObjects={apiResourceObjects}
-            wtbEntity={wtbEntity}
-            pricingEntries={pricingEntries}
-          />
-          :
-          <ProductLinks
-            apiResourceObjects={apiResourceObjects}
-            wtbEntity={wtbEntity}
-            entities={pricingEntries[0].entities}
-          />
-        }
-      </div>
-    </AppContext.Provider>
+    return <div className="container-fluid">
+      {pricingEntries.length > 1 ?
+        <MultiProduct
+          apiResourceObjects={apiResourceObjects}
+          wtbEntity={wtbEntity}
+          pricingEntries={pricingEntries}
+        />
+        :
+        <ProductLinks
+          apiResourceObjects={apiResourceObjects}
+          wtbEntity={wtbEntity}
+          entities={pricingEntries[0].entities}
+        />
+      }
+    </div>
   }
 }
 
