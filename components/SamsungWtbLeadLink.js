@@ -23,7 +23,10 @@ export default class SamsungWtbLeadLink extends React.Component {
     params.dimension5 = `${productKey}|${productName}|${categoryName}|${storeName}`;
     params.dimension6 = productKey;
 
-    window.gtag('event', 'Follow', params)
+    window.gtag('event', 'Follow', params);
+
+    window._satellite.setVar('Retailer', storeName);
+    window._satellite.track('iframe_retailer');
   };
 
   render() {

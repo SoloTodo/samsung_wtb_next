@@ -86,6 +86,8 @@ class Index extends React.Component{
       sent_stores.push(store.id);
       window.gtag('event', 'Display', params)
     }
+
+    window._satellite.pageBottom();
   }
 
   render() {
