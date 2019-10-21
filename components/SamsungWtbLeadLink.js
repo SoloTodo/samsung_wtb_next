@@ -25,8 +25,13 @@ export default class SamsungWtbLeadLink extends React.Component {
 
     window.gtag('event', 'Follow', params);
 
-    window._satellite.setVar('Retailer', storeName);
-    window._satellite.track('iframe_retailer');
+    window.track_link && window.track_link(storeName, 'Comprar');
+    const s = window.s_gi('sssamsung4cl,sssamsung4mstglobal');
+    s.linkTrackVars='eVar35';
+    s.linkTrackEvents='event35,event55';
+    s.eVar35=`buy online:${storeName}`;
+    s.events='event35,event55';
+    s.tl(this,'o', 'Comprar');
   };
 
   render() {

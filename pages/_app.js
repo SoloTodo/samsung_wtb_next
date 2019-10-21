@@ -24,6 +24,8 @@ class MyApp extends App {
       <Container>
         <SamsungWtbHead />
         <Component {...pageProps} />
+
+        <script src="/static/js/s_code_microsite.js" />
       </Container>
     )
   }
