@@ -144,8 +144,8 @@ const getPricingEntries = async wtbEntity => {
   const categoryId = wtbEntity.category.split('/').filter(x => Boolean(x.length)).reverse()[0];
   let products;
 
-  // Get the bucket only if the product is an S10e (G970) / S10 (G973) / S10+ (G975)
-  if (categoryId in settings.bucketCategories && wtbEntity.key.includes('G97')) {
+  // Get the bucket only if the product is an S10 family (G97*) or S20 family (G98*)
+  if (categoryId in settings.bucketCategories && (wtbEntity.key.includes('G97') || wtbEntity.key.includes('G98'))) {
     products = await fetchJson(`products/${productId}/bucket/?fields=${settings.bucketCategories[categoryId].bucketField}`);
   } else {
     products = [wtbEntity.product]
