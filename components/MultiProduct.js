@@ -15,8 +15,8 @@ class MultiProduct extends React.Component{
       let choices = [];
       let value = undefined;
 
-      for (let pricingEntry of this.props.pricingEntries) {
-        let product = pricingEntry.product;
+      for (const pricingEntry of this.props.pricingEntries) {
+        const product = pricingEntry.product;
         if (product.id === wtbEntity.product.id) {
           value = product.specs[axis.field];
         }
@@ -45,6 +45,17 @@ class MultiProduct extends React.Component{
       if (componentAxisLabel === axis.label) {
         axis['value'] = newValue;
         break;
+      }
+    }
+
+    // TODO Remove after S20 launch
+    if (componentAxisLabel === 'Modelo') {
+      if (newValue.includes('S20 Ultra')) {
+        convertedAxes[1]['value'] = 'Audífonos Galaxy Buds+'
+      } else if (newValue.includes('S20+')) {
+        convertedAxes[1]['value'] = 'Audífonos Galaxy Buds+'
+      } else if (newValue.includes('S20')) {
+        convertedAxes[1]['value'] = 'Cargador inalámbrico'
       }
     }
 

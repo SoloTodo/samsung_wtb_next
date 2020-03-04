@@ -18,13 +18,21 @@ export default {
       'categoryName': 'Celulares',
       'bucketField': 'base_model_id',
       'axes': [
+        // {
+        //   'label': 'Modelo',
+        //   'field': 'base_model_unicode'
+        // },
+        // {
+        //   'label': 'Color',
+        //   'field': 'color_unicode',
+        // },
+        // {
+        //   'label': 'Capacidad',
+        //   'field': 'internal_storage_unicode',
+        // },
         {
-          'label': 'Color',
-          'field': 'color_unicode',
-        },
-        {
-          'label': 'Capacidad',
-          'field': 'internal_storage_unicode',
+          'label': 'Modelo',
+          'field': 'galaxy_s20_key'
         },
         {
           'label': 'Bundle',
