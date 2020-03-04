@@ -1,6 +1,8 @@
 {
   "name": "create-next-example-app",
-  "engines": { "node": "10.x" },
+  "engines": {
+    "node": "10.x"
+  },
   "scripts": {
     "dev": "next",
     "deploy": "now && now --prod"
@@ -16,6 +18,7 @@
     "next": "^8.0.4",
     "node-sass": "^4.11.0",
     "nookies": "^2.0.4",
+    "now": "^17.0.4",
     "query-string": "^6.4.2",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",

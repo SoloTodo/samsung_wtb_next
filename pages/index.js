@@ -41,6 +41,13 @@ class Index extends React.Component{
       })
     }
 
+    // This is to filter out the samsung store when the product is a galaxy s20
+    if (wtbEntity.name.includes('G98')) {
+      for (const pricingEntry of pricingEntries) {
+        pricingEntry.entities = pricingEntry.entities.filter(entity => apiResourceObjects[entity.store].id !== 223);
+      }
+    }
+
     return {
       apiResourceObjects,
       wtbEntity,
