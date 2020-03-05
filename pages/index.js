@@ -25,6 +25,61 @@ class Index extends React.Component{
 
     // Pricing Entries
     const pricingEntries = await getPricingEntries(wtbEntity);
+
+    // This is to filter out the samsung store when the product is a galaxy s20
+    // And also adds Scotiabank and BCI stores
+    // TODO: Remove all this
+    const bundleChargerIds = [76117, 76123, 76122];
+    const bundleBudsIds = [76120, 76121, 76119, 76127, 76125];
+
+    if (wtbEntity.name.includes('G98')) {
+      for (const pricingEntry of pricingEntries) {
+        pricingEntry.entities = pricingEntry.entities.filter(entity => apiResourceObjects[entity.store].id !== 223);
+
+        if (bundleChargerIds.includes(pricingEntry.product.id)) {
+          apiResourceObjects['https://publicapi.solotodo.com/stores/scotiabank/'] = {
+            id: 'scotiabank',
+            name: 'scotiabank',
+            type: 'https://publicapi.solotodo.com/store_types/1/',
+            logo: 'https://scotiabankfiles.azureedge.net/scotiabank-chile/logo-scotiabank-nuevo-2.svg'
+          };
+
+          const scotiabankEntity = {
+            id: 'scotiabank',
+            store: 'https://publicapi.solotodo.com/stores/scotiabank/',
+            external_url: 'https://shop.samsung.cl/scotiabank',
+            product: pricingEntry.product,
+            active_registry: { offer_price: '775990.00'},
+            currency: 'https://publicapi.solotodo.com/currencies/1/'
+          };
+
+          pricingEntry.entities.push(scotiabankEntity);
+        }
+
+        if (bundleBudsIds.includes(pricingEntry.product.id)) {
+          apiResourceObjects['https://publicapi.solotodo.com/stores/bci/'] = {
+            id: 'bci',
+            name: 'bci',
+            type: 'https://publicapi.solotodo.com/store_types/1/',
+            logo: 'https://bci.modyocdn.com/uploads/997cfef1-4d5c-462d-8b32-bb59e33a011b/original/bci-logo-personas.png'
+          };
+
+          const bciEntity = {
+            id: 'bci',
+            store: 'https://publicapi.solotodo.com/stores/bci/',
+            external_url: 'https://shop.samsung.cl/bci',
+            product: pricingEntry.product,
+            active_registry: { offer_price: '775990.00'},
+            currency: 'https://publicapi.solotodo.com/currencies/1/'
+          };
+
+          pricingEntry.entities.push(bciEntity);
+        }
+      }
+    }
+
+    // End of samsung s20 code. When removing stop here.
+
     for (const pricingEntry of pricingEntries) {
       pricingEntry.entities.sort((a, b) => {
         const aStore = apiResourceObjects[a.store];
@@ -39,13 +94,6 @@ class Index extends React.Component{
           return aPriority - bPriority
         }
       })
-    }
-
-    // This is to filter out the samsung store when the product is a galaxy s20
-    if (wtbEntity.name.includes('G98')) {
-      for (const pricingEntry of pricingEntries) {
-        pricingEntry.entities = pricingEntry.entities.filter(entity => apiResourceObjects[entity.store].id !== 223);
-      }
     }
 
     return {
