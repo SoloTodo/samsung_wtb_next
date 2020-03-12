@@ -34,10 +34,10 @@ export default {
           'label': 'Modelo',
           'field': 'galaxy_s20_key'
         },
-        {
-          'label': 'Bundle',
-          'field': 'bundle_unicode',
-        }
+        // {
+        //   'label': 'Bundle',
+        //   'field': 'bundle_unicode',
+        // }
       ],
     }
   }

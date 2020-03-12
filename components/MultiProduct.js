@@ -48,39 +48,51 @@ class MultiProduct extends React.Component{
       }
     }
 
-    // TODO Remove after S20 launch
-    if (componentAxisLabel === 'Modelo') {
-      if (newValue.includes('S20 Ultra')) {
-        convertedAxes[1]['value'] = 'Audífonos Galaxy Buds+'
-      } else if (newValue.includes('S20+')) {
-        convertedAxes[1]['value'] = 'Audífonos Galaxy Buds+'
-      } else if (newValue.includes('S20')) {
-        convertedAxes[1]['value'] = 'Cargador inalámbrico'
-      }
-    }
-
     this.setState({
       axes: convertedAxes
     })
   };
 
   render() {
-    let filteredEntities = [];
-    const selectedPricingEntry = this.props.pricingEntries.filter(pricingEntry => {
+    const filteredEntities = [];
+    const selectedPricingEntries = this.props.pricingEntries.filter(pricingEntry => {
       return this.state.axes.every(axis => pricingEntry.product.specs[axis.field] === axis.value)
-    })[0];
+    });
 
-    if (selectedPricingEntry) {
-      let storeUrls = [];
-      filteredEntities = selectedPricingEntry.entities.filter(entity => {
-        let storeUrl = entity.store;
-        if (!storeUrls.includes(storeUrl)) {
-          storeUrls.push(storeUrl);
-          return true
-        }
-        return false
-      });
+    for (const pricingEntry of selectedPricingEntries) {
+      let localFilteredEntities = pricingEntry.entities;
+
+      // TODO Delete this after S20 launch window
+      if (pricingEntry.product.name.includes('G98')) {
+        localFilteredEntities = pricingEntry.entities.map(entity => {
+          const defaultBundle = pricingEntry.product.name.includes('G980') ? 'Incluye cargador inalámbrico' : 'Incluye audífonos Buds+';
+          const bundle = pricingEntry.product.specs['bundle_unicode'] === 'Sin bundle' ? 'Sin bundle' : defaultBundle;
+
+          if (!entity.cell_plan) {
+            entity.cell_plan = {}
+          }
+
+          entity.cell_plan.name = bundle;
+          return entity;
+        });
+      }
+
+      filteredEntities.push(...localFilteredEntities)
     }
+
+    filteredEntities.sort((a, b) => {
+        const aStore = this.props.apiResourceObjects[a.store];
+        const bStore = this.props.apiResourceObjects[b.store];
+
+        const aPriority = settings.storePriorities[aStore.id] || 4;
+        const bPriority = settings.storePriorities[bStore.id] || 4;
+
+        if (aPriority === bPriority) {
+          return aStore.name.toUpperCase().localeCompare(bStore.name.toUpperCase());
+        } else {
+          return aPriority - bPriority
+        }
+      });
 
     return <div>
       <div className="row">
