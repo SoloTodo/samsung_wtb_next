@@ -64,15 +64,19 @@ class MultiProduct extends React.Component{
 
       // TODO Delete this after S20 launch window
       if (pricingEntry.product.name.includes('G98')) {
-        localFilteredEntities = pricingEntry.entities.map(entity => {
-          const defaultBundle = pricingEntry.product.name.includes('G980') ? 'Incluye cargador inalámbrico' : 'Incluye audífonos Buds+';
-          const bundle = pricingEntry.product.specs['bundle_unicode'] === 'Sin bundle' ? 'Sin bundle' : defaultBundle;
+        localFilteredEntities = pricingEntry.entities.filter(entity => {
+          const store = this.props.apiResourceObjects[entity.store];
+          const storePriority = settings.storePriorities[store.id] || 4;
+          return storePriority <= 3 || pricingEntry.product.specs['bundle_unicode'] === 'Sin bundle'
+        }).map(entity => {
+          // const defaultBundle = pricingEntry.product.name.includes('G980') ? 'Incluye cargador inalámbrico' : 'Incluye audífonos Buds+';
+          // const bundle = pricingEntry.product.specs['bundle_unicode'] === 'Sin bundle' ? 'Sin bundle' : defaultBundle;
 
-          if (!entity.cell_plan) {
-            entity.cell_plan = {}
-          }
-
-          entity.cell_plan.name = bundle;
+          // if (!entity.cell_plan) {
+          //   entity.cell_plan = {}
+          // }
+          //
+          // entity.cell_plan.name = bundle;
           return entity;
         });
       }
