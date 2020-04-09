@@ -168,7 +168,7 @@ const getPricingEntries = async wtbEntity => {
     products = [wtbEntity.product]
   }
 
-  let url = 'products/available_entities/?';
+  let url = 'products/available_entities/?exclude_marketplace=1&';
   for (const product of products) {
     url += `ids=${product.id}&`
   }
