@@ -4,7 +4,7 @@
     "node": "10.x"
   },
   "scripts": {
-    "dev": "next",
+    "build": "next build",
     "deploy": "now && now --prod"
   },
   "dependencies": {
@@ -15,12 +15,13 @@
     "file-loader": "^3.0.1",
     "isomorphic-unfetch": "^3.0.0",
     "moment": "^2.24.0",
-    "next": "^8.0.4",
+    "next": "^9.4.4",
+    "nextjs": "^0.0.3",
     "node-sass": "^4.11.0",
     "nookies": "^2.0.4",
     "now": "^17.0.4",
     "query-string": "^6.4.2",
-    "react": "^16.8.6",
+    "react": "^16.13.1",
     "react-dom": "^16.8.6",
     "ua-parser-js": "^0.7.19",
     "url-loader": "^1.1.2",

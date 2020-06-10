@@ -9,7 +9,10 @@ class MultiProduct extends React.Component{
     const wtbEntity = this.props.wtbEntity;
     const categoryId = this.props.apiResourceObjects[wtbEntity.category].id;
 
-    const axes = settings.bucketCategories[categoryId].axes;
+    const axes = wtbEntity.key.includes('G98') ? [{
+      'label': 'Modelo',
+      'field': 'galaxy_s20_key'
+    }] : settings.bucketCategories[categoryId].axes;
 
     let convertedAxes = axes.map(axis => {
       let choices = [];
@@ -116,8 +119,7 @@ class MultiProduct extends React.Component{
         /> :
         <div className="row">
           <div className="col-12 mt-3">
-            <h4>Esta combinación no está disponible actualmente, puedes usar los botones superiores para cotizar
-              otras</h4>
+            <h4>Esta versión no está disponible actualmente, puedes usar el selector superior para cotizar otra</h4>
           </div>
         </div>}
     </div>
