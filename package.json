@@ -1,7 +1,7 @@
 {
   "name": "create-next-example-app",
   "engines": {
-    "node": "10.x"
+    "node": "12.x"
   },
   "scripts": {
     "build": "next build",
@@ -17,7 +17,7 @@
     "moment": "^2.24.0",
     "next": "^9.4.4",
     "nextjs": "^0.0.3",
-    "node-sass": "^4.11.0",
+    "node-sass": "^4.14.1",
     "nookies": "^2.0.4",
     "now": "^17.0.4",
     "query-string": "^6.4.2",
