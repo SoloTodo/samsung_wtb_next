@@ -50,3 +50,29 @@ body {
     max-height: 80px;
     max-width: 140px;
 }
+
+/* Product Alternatives */
+.alternative-container {
+    max-width: 250px;
+}
+
+@media (max-width: 500px) {
+    .alternative-container {
+        max-width: 100%;
+    }
+}
+
+.alternative-text span {
+    width: 100%;
+    font-weight: bold;
+    text-align: center;
+}
+
+.alternative-image {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.alternative-image img{
+    max-width: 250px;
+}

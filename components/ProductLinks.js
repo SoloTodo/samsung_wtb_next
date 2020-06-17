@@ -2,13 +2,14 @@ import React from 'react'
 import CellLinks from './CellLinks'
 import GenericLink from './GenericLink'
 import settings from '../settings'
+import ProductAlternatives from "./ProductAlternatives";
 
 class ProductLinks extends React.Component {
   render() {
     const category = this.props.apiResourceObjects[this.props.wtbEntity.category];
 
     if (!this.props.entities.length) {
-      return <h3>El producto no está disponible en estos momentos</h3>
+      return <ProductAlternatives alternativeProducts={this.props.alternativeProducts}/>
     }
 
     if (category.id === settings.cellCategoryId) {
