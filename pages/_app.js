@@ -1,6 +1,6 @@
 import "@babel/polyfill";
 import React from 'react'
-import App, { Container } from 'next/app'
+import App from 'next/app'
 
 import SamsungWtbHead from '../components/SamsungWtbHead'
 
@@ -21,12 +21,11 @@ class MyApp extends App {
     const { Component, pageProps } = this.props;
 
     return (
-      <Container>
+      <React.Fragment>
         <SamsungWtbHead />
         <Component {...pageProps} />
-
         <script src="/static/js/s_code_microsite.js" />
-      </Container>
+      </React.Fragment>
     )
   }
 }
