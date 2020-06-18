@@ -58,8 +58,11 @@ class Index extends React.Component{
 
     // AlternativeProducts
     let alternativeProducts;
+    const categoryId = apiResourceObjects[wtbEntity.category].id;
     if (pricingEntries.length === 1 && pricingEntries[0].entities.length === 0) {
-      alternativeProducts = await getAlternativeProducts(wtbEntity)
+      if (!settings.noAlternativeCategories.includes(categoryId)) {
+        alternativeProducts = await getAlternativeProducts(wtbEntity)
+      }
     }
 
     return {

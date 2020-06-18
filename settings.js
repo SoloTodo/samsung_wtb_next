@@ -44,5 +44,6 @@ export default {
         }
       ]
     }
-  }
+  },
+  noAlternativeCategories: [36]
 }

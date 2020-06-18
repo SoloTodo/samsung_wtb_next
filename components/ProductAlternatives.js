@@ -3,6 +3,10 @@ import React from 'react'
 
 class ProductAlternatives extends React.Component {
     render() {
+        if (!this.props.alternativeProducts) {
+            return <h4 className="pt-2">Este producto no esta disponible.</h4>
+        }
+
         const firstThreeAlternatives = this.props.alternativeProducts.slice(0, 3);
         return <React.Fragment>
             <h4 className="pt-2">Este producto no esta disponible, te sugerimos las siguientes alternativas</h4>
