@@ -62,8 +62,6 @@ class Index extends React.Component{
       alternativeProducts = await getAlternativeProducts(wtbEntity)
     }
 
-    console.log(alternativeProducts)
-
     return {
       apiResourceObjects,
       wtbEntity,

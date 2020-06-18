@@ -54,6 +54,13 @@ body {
 /* Product Alternatives */
 .alternative-container {
     max-width: 250px;
+    text-decoration: none;
+    color: inherit
+}
+
+.alternative-container:hover {
+    text-decoration: none;
+    color: inherit
 }
 
 @media (max-width: 500px) {
@@ -75,4 +82,5 @@ body {
 
 .alternative-image img{
     max-width: 250px;
+    max-height: 200px;
 }
