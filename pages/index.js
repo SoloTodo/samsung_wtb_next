@@ -56,20 +56,10 @@ class Index extends React.Component{
       })
     }
 
-    // AlternativeProducts
-    let alternativeProducts;
-    const categoryId = apiResourceObjects[wtbEntity.category].id;
-    if (pricingEntries.length === 1 && pricingEntries[0].entities.length === 0) {
-      if (!settings.noAlternativeCategories.includes(categoryId)) {
-        alternativeProducts = await getAlternativeProducts(wtbEntity)
-      }
-    }
-
     return {
       apiResourceObjects,
       wtbEntity,
       pricingEntries,
-      alternativeProducts
     }
   };
 
@@ -139,7 +129,6 @@ class Index extends React.Component{
           apiResourceObjects={apiResourceObjects}
           wtbEntity={wtbEntity}
           entities={pricingEntries[0].entities}
-          alternativeProducts={this.props.alternativeProducts}
         />
       }
     </div>
@@ -192,14 +181,6 @@ const getPricingEntries = async wtbEntity => {
   return entityResults.results.filter(pricingEntry =>
     pricingEntry.product.id === productId || pricingEntry.entities.length
   )
-};
-
-const getAlternativeProducts = async (wtbEntity) => {
-  let url =`wtb/entities/${wtbEntity.id}/available_alternatives/?`;
-  for (const storeId of settings.stores) {
-    url += `stores=${storeId}&`
-  }
-  return fetchJson(url)
 };
 
 export default Index

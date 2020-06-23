@@ -9,7 +9,9 @@ class ProductLinks extends React.Component {
     const category = this.props.apiResourceObjects[this.props.wtbEntity.category];
 
     if (!this.props.entities.length) {
-      return <ProductAlternatives alternativeProducts={this.props.alternativeProducts}/>
+      return <ProductAlternatives
+          apiResourceObjects={this.props.apiResourceObjects}
+          wtbEntity={this.props.wtbEntity}/>
     }
 
     if (category.id === settings.cellCategoryId) {
