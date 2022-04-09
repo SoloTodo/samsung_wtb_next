@@ -14,7 +14,7 @@
     "bootstrap": "^4.3.1",
     "file-loader": "^3.0.1",
     "isomorphic-unfetch": "^3.0.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "next": "^9.4.4",
     "nextjs": "^0.0.3",
     "node-sass": "^4.14.1",
